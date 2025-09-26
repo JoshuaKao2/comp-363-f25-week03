@@ -54,7 +54,23 @@ def build_huffman_tree(frequencies: list[int]) -> Node:
     """
     forest = initialize_forest(frequencies)
     # Your code here
+    while len(forest) > 1:
+        s1 = get_smallest(forest)
+        s2 = get_smallest(forest)
+        new_node = Node(s1.get_frequency() + s2.get_frequency())
+        new_node.set_left(s1)
+        new_node.set_right(s2)
+        forest.append(new_node)
     return forest[0]
+
+
+def get_smallest(forest):
+    smallest_index = 0
+    for i in range(1, len(forest)):
+        if forest[i] < forest[smallest_index]:
+            smallest_index = i
+    return forest.pop(smallest_index)
+
 
 
 def build_encoding_table(huffman_tree_root: Node) -> list[str]:
@@ -81,3 +97,5 @@ def decode(encoded_string: str, huffman_root: Node) -> str:
     Decodes the encoded string using the Huffman table as a key.
     """
     pass
+
+
